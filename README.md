@@ -5,23 +5,19 @@ Fonctionnalités
 Haute performance : Exploite les abstractions sans coût de Rust pour offrir des vitesses d'exécution rapides.
 Sécurité : Bénéficie du modèle de propriété de Rust et des vérifications strictes du compilateur pour garantir la sécurité mémoire et prévenir les bogues courants.
 Intégration transparente : Conçu pour fonctionner sans heurts au sein de l'écosystème Python, permettant une adoption et une utilisation faciles.
-Installation
-Pour installer PySmithy, utilisez pip :
 
-bash
-Copier
-Modifier
-pip install pysmithy
-Utilisation
+Installation:
+-Pas encore disponible
+
+
 Voici un exemple de base sur la façon d'utiliser PySmithy dans votre code Python :
 
 python
-Copier
-Modifier
+
 import pysmithy
 
 # Exemple d'appel de fonction
-resultat = pysmithy.example_function(donnees)
+resultat = pysmithy.cosh(donnees)
 Pour une utilisation plus détaillée et des fonctionnalités avancées, référez-vous à la documentation.
 
 Développement
