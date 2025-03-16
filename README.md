@@ -1,4 +1,4 @@
-PySmithy
+# PySmithy
 PySmithy est une bibliothèque d'apprentissage automatique qui tire parti des performances et des caractéristiques de sécurité de Rust pour améliorer les capacités de Python. En combinant la rapidité de Rust avec la simplicité de Python, PySmithy vise à fournir des outils efficaces et fiables pour les tâches d'apprentissage automatique.
 
 Fonctionnalités
