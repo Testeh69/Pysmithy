@@ -3,7 +3,9 @@ PySmithy est une bibliothèque d'apprentissage automatique qui tire parti des pe
 
 Fonctionnalités
 Haute performance : Exploite les abstractions sans coût de Rust pour offrir des vitesses d'exécution rapides.
+
 Sécurité : Bénéficie du modèle de propriété de Rust et des vérifications strictes du compilateur pour garantir la sécurité mémoire et prévenir les bogues courants.
+
 Intégration transparente : Conçu pour fonctionner sans heurts au sein de l'écosystème Python, permettant une adoption et une utilisation faciles.
 
 Installation:
