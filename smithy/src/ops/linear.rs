@@ -1,7 +1,5 @@
-use core::panic;
 use rayon::prelude::*;
-
-
+use core::panic;
 
 pub fn dot_matrice(a: Vec<Vec<f64>>, b: Vec<Vec<f64>>) -> Vec<Vec<f64>> {
    
@@ -15,7 +13,7 @@ pub fn dot_matrice(a: Vec<Vec<f64>>, b: Vec<Vec<f64>>) -> Vec<Vec<f64>> {
     
     let mut matrice = vec![vec![0.0; b_col_len]; a_line_len];
 
-    for line in 0..a_line_len {      
+    matrice.par_iter_mut().enumerate().for_each(|(i, row)| {
         for col in 0..b_col_len { 
             let mut result = 0.0;
             for k in 0..a_col_len {  
@@ -23,7 +21,7 @@ pub fn dot_matrice(a: Vec<Vec<f64>>, b: Vec<Vec<f64>>) -> Vec<Vec<f64>> {
             }
             matrice[line][col] = result; 
         }
-    }
+    });
     
     matrice  
 }
