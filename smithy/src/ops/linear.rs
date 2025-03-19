@@ -17,9 +17,9 @@ pub fn dot_matrice(a: Vec<Vec<f64>>, b: Vec<Vec<f64>>) -> Vec<Vec<f64>> {
         for col in 0..b_col_len { 
             let mut result = 0.0;
             for k in 0..a_col_len {  
-                result += a[line][k] * b[k][col]; 
+                result += a[i][k] * b[k][col]; 
             }
-            matrice[line][col] = result; 
+            row[col] = result; 
         }
     });
     

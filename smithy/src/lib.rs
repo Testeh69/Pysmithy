@@ -1,7 +1,7 @@
 use pyo3::prelude::*;
 use pyo3::wrap_pyfunction;
 mod ops;
-mod linear;
+
 
 
 #[pyfunction]
@@ -17,6 +17,11 @@ fn sigmoid(x: f64) -> PyResult<f64> {
 
 
 #[pyfunction]
+fn dot_matrice(a:Vec<Vec<f64>>, b:Vec<Vec<f64>>) -> PyResult<Vec<Vec<f64>>> {
+    Ok(ops::linear::dot_matrice(a,b))
+}
+   
+#[pyfunction]
 fn cosh(x:f64) ->PyResult<f64>{
     Ok(ops::activation::cosh(x))
 }
@@ -29,11 +34,6 @@ fn tanh(x:f64) ->PyResult<f64>{
 
 
 
-#[pyfunction]
-fn dot_matrice(a:Vec<Vec<f64>>,b:Vec<Vec<f64>>) -> PyResult<Vec<Vec<f64>>> {
-    Ok(ops::linear::dot_matrice(a,b))
-}
-   
 
 #[pymodule]
 fn smithy(m: &Bound<'_, PyModule>) -> PyResult<()> {

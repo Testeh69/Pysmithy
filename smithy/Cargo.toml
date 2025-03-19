@@ -6,6 +6,8 @@ edition = "2021"
 [dependencies]
 pyo3 = { version = "0.22", features = ["extension-module"] }
 rayon = "1.10"
+ndarray = { version = "0.16.0" }
+numpy = "0.22"
 
 [lib]
 crate-type = ["cdylib"]
