@@ -1,3 +1,7 @@
+
+![logo pysmithy](Pysmithy/smithy_logo.webp)
+
+
 # PySmithy
 PySmithy est une bibliothèque d'apprentissage automatique pensée comme un projet pour apprendre le bas-niveau avec Rust et le machine learning.
 
