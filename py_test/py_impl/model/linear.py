@@ -2,9 +2,8 @@ import sys
 import os
 sys.path.insert(0, os.path.abspath("C:/Users/Orefice/OneDrive/Bureau/IT/Pysmithy"))
 
-
-from py_impl.model.linear import LinearRegression, LogisticRegression
-import unittest 
+import unittest
+from py_impl.model.linear import LinearRegression
 import numpy as np
 
 
@@ -19,6 +18,7 @@ class TestImplementationPythonLinearModel(unittest.TestCase):
         self.y_train = (np.random.rand(100, 1) > 0.5).astype(int)  # Labels binaires
         self.X_test = np.random.rand(10, 2)  # 10 nouveaux exemples
         self.model = LinearRegression()
+    
     
     def test_training_shapes(self):
         """Vérifie que les poids et le biais ont les bonnes dimensions après entraînement."""
@@ -50,7 +50,7 @@ class TestImplementationPythonLinearModel(unittest.TestCase):
         np.testing.assert_almost_equal(result_backward_prop, result_normal, decimal=5)
 
 
-
+        
 
 
 

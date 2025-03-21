@@ -5,7 +5,7 @@ def validate_and_apply(function: Callable[[float], float]) -> Callable[[Union[in
     def wrapper(arg: Union[int, float]) -> float:
         if not isinstance(arg, (int, float)):
             raise TypeError(f"Expected int or float, got {type(arg).__name__}")
-        return function(arg)  # Ne pas reconvertir ici, la fonction interne le gère déjà
+        return function(arg)  
     return wrapper
 
 @validate_and_apply

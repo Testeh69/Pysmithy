@@ -1,5 +1,6 @@
 # PySmithy
-PySmithy est une bibliothèque d'apprentissage automatique qui tire parti des performances et des caractéristiques de sécurité de Rust pour améliorer les capacités de Python. En combinant la rapidité de Rust avec la simplicité de Python, PySmithy vise à fournir des outils efficaces et fiables pour les tâches d'apprentissage automatique.
+PySmithy est une bibliothèque d'apprentissage automatique pensée comme un projet pour apprendre le bas-niveau avec Rust et le machine learning.
+
 
 Fonctionnalités
 Haute performance : Exploite les abstractions sans coût de Rust pour offrir des vitesses d'exécution rapides.
@@ -10,6 +11,17 @@ Intégration transparente : Conçu pour fonctionner sans heurts au sein de l'é
 
 Installation:
 -Pas encore disponible
+
+
+## Structure du Projet
+
+Le projet est structuré comme suit :
+
+- **`env_test/`** : Tests des fonctions Rust
+- **`py/`** : API haut-niveau en Python pour encapsuler les fonctions Rust
+- **`py_impl/`** : Implémentation des fonctions natives en Python
+- **`py_test/`** : Tests unitaires pour `py_impl` et `py`
+- **`smithy/`** : API bas-niveau écrite en Rust
 
 
 PySmithy est sous licence MIT. Consultez le fichier LICENSE pour plus de détails.
