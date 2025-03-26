@@ -24,7 +24,7 @@ Le projet est structuré comme suit :
 - **`env_test/`** : Tests des fonctions Rust
 - **`py/`** : API haut-niveau en Python pour encapsuler les fonctions Rust
 - **`py_impl/`** : Implémentation des fonctions natives en Python
-- **`py_test/`** : Tests unitaires pour `py_impl` et `py`
+- **`py_test/`** : Tests unitaires pour `py_impl`, `smithy` et `py`
 - **`smithy/`** : API bas-niveau écrite en Rust
 
 
