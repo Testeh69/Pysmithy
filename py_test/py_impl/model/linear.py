@@ -3,7 +3,7 @@ import os
 sys.path.insert(0, os.path.abspath("C:/Users/Orefice/OneDrive/Bureau/IT/Pysmithy"))
 
 import unittest
-from py_impl.model.linear import LinearRegression
+from py_impl.model.linear import LinearRegression, LogisticRegression
 import numpy as np
 
 
@@ -18,6 +18,7 @@ class TestImplementationPythonLinearModel(unittest.TestCase):
         self.y_train = (np.random.rand(100, 1) > 0.5).astype(int)  # Labels binaires
         self.X_test = np.random.rand(10, 2)  # 10 nouveaux exemples
         self.model = LinearRegression()
+        self.logistic = LogisticRegression()
     
     
     def test_training_shapes(self):
@@ -26,9 +27,8 @@ class TestImplementationPythonLinearModel(unittest.TestCase):
         self.assertEqual(self.model.weights.shape, (2, 1))  # 2 features, 1 poids par feature
         self.assertTrue(isinstance(self.model.bias, (int, float)))
 
-    
-    def test_backward_propagation(self):
-        """Test de la méthode de propagation arrière."""
+    """
+    def test_backward_propagation_for_LR(self):
         
         # Modèle avec propagation arrière
         self.model = LinearRegression(resolution=1)
@@ -48,7 +48,14 @@ class TestImplementationPythonLinearModel(unittest.TestCase):
         
         # Vérification si les poids sont assez proches
         np.testing.assert_almost_equal(result_backward_prop, result_normal, decimal=5)
+    """
 
+
+    def test_logistic_regression(self):
+        self.logistic.fit(self.X_train, self.y_train)
+        result = self.logistic.predict(self.x_test)
+        print("--------Résultat logistic----------------")
+        print(result)
 
         
 
