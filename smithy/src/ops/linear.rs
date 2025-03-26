@@ -1,7 +1,7 @@
 use rayon::prelude::*;
 use core::panic;
 
-pub fn dot_matrice(a: Vec<Vec<f64>>, b: Vec<Vec<f64>>) -> Vec<Vec<f64>> {
+pub fn dot_matrice(a: Vec<Vec<f32>>, b: Vec<Vec<f32>>) -> Vec<Vec<f32>> {
    
     let a_line_len = a.len();
     let a_col_len = a[0].len();       
