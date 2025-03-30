@@ -3,6 +3,16 @@ import numpy as np
 import random
 
 
+"""
+Graph Travel:
+
+Task:
+- must support Json file
+- importing a json file or txt file that print the result
+
+"""
+
+
 
 
 
