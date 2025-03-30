@@ -4,17 +4,6 @@ import random
 
 
 
-graphCities = {
-    "Paris": ["Lyon", "Marseille", "Toulouse", "Bordeaux"],
-    "Lyon": ["Paris", "Marseille", "Grenoble", "Nice"],
-    "Marseille": ["Paris", "Lyon", "Nice", "Toulouse"],
-    "Toulouse": ["Paris", "Marseille", "Bordeaux", "Lille"],
-    "Bordeaux": ["Paris", "Toulouse", "Lille"],
-    "Grenoble": ["Lyon"],
-    "Nice": ["Lyon", "Marseille"],
-    "Lille": ["Paris", "Bordeaux"]
-}
-
 
 
 
