@@ -1,3 +1,4 @@
 smithy/target
 compile.ps1
 env_test
+venv
