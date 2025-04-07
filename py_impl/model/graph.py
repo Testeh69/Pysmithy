@@ -6,8 +6,8 @@ import json
 Graph Travel:
 
 Task:
-- must support Json file
-- importing a json file or txt file that print the result
+- An interface for Q learning
+- Method for custom the reward fonction
 
 """
 
@@ -80,7 +80,7 @@ class QLearningGraphTravel:
                 self.travel.append(self.state)
                 self.choice_action()
                 step_reward = 0.1 if self.state == end else reward
-                self.updateQtable(step_reward=step_reward, lr = lr, gamma = gamma)
+                self.update_q_table(step_reward=step_reward, lr = lr, gamma = gamma)
                 self.state = self.next_best_action
                 total_reward += step_reward
                 nb_travel_cities +=1
@@ -94,7 +94,7 @@ class QLearningGraphTravel:
                 print(f"Path: {self.travel}")     
 
 
-    def updateQtable(self, step_reward, lr, gamma):
+    def update_q_table(self, step_reward, lr, gamma):
         max_next_Q = max(self.Q_table[self.next_best_action].values()) if self.Q_table[self.next_best_action] else 0
         if isinstance(self.graph_cities[self.state],list):
             self.Q_table[self.state][self.next_best_action] += lr*(step_reward + gamma* max_next_Q - self.Q_table[self.state][self.next_best_action])           
