@@ -1,7 +1,6 @@
-from typing import Union
 import numpy as np
 import random
-
+import json
 
 """
 Graph Travel:
@@ -11,6 +10,7 @@ Task:
 - importing a json file or txt file that print the result
 
 """
+
 
 
 
@@ -78,10 +78,9 @@ class QLearningGraphTravel:
             step_reward = 0
             while self.state != end and nb_travel_cities < limit:
                 self.travel.append(self.state)
-                self.choiceAction()
+                self.choice_action()
                 step_reward = 0.1 if self.state == end else reward
-                max_next_Q = max(self.Q_table[self.next_best_action].values()) if self.Q_table[self.next_best_action] else 0
-                self.Q_table[self.state][self.next_best_action] += lr*(step_reward + gamma* max_next_Q - self.Q_table[self.state][self.next_best_action])
+                self.updateQtable(step_reward=step_reward, lr = lr, gamma = gamma)
                 self.state = self.next_best_action
                 total_reward += step_reward
                 nb_travel_cities +=1
@@ -93,8 +92,18 @@ class QLearningGraphTravel:
             if verbose:
                 print(f"Epoch {x + 1}/{epochs} - Total Rewards: {total_reward}")
                 print(f"Path: {self.travel}")     
-                
 
+
+    def updateQtable(self, step_reward, lr, gamma):
+        max_next_Q = max(self.Q_table[self.next_best_action].values()) if self.Q_table[self.next_best_action] else 0
+        if isinstance(self.graph_cities[self.state],list):
+            self.Q_table[self.state][self.next_best_action] += lr*(step_reward + gamma* max_next_Q - self.Q_table[self.state][self.next_best_action])           
+        if isinstance(self.graph_cities[self.state], dict):
+            get_weighted_sum = self.graph_cities[self.state].get(self.next_best_action, 1)
+            self.Q_table[self.state][self.next_best_action] += lr*(step_reward*get_weighted_sum + gamma* max_next_Q - self.Q_table[self.state][self.next_best_action])           
+            
+
+    
     def test(self,beginning,end, max_iterations = 100):
 
         """
@@ -121,15 +130,59 @@ class QLearningGraphTravel:
             iter += 1
         return self.travel
 
-    def choiceAction(self, decay =  0.001):
+    def choice_action(self, decay =  0.001):
         self.epsilon = max(0.1, self.epsilon * np.exp(-decay))         
         x = np.random.uniform(0,1)
         if x < self.epsilon:
-            self.next_best_action = random.choice(self.graph_cities[self.state])
+            if isinstance(self.graph_cities[self.state],list):
+                self.next_best_action = random.choice(self.graph_cities[self.state])
+            if isinstance(self.graph_cities[self.state], dict):
+                self.next_best_action = random.choice(list(self.graph_cities[self.state].keys()))
+
         else:
             self.next_best_action = max(self.Q_table[self.state], key=self.Q_table[self.state].get)
+  
         return self.next_best_action
+    
+    def save(self, filename):
+        """Sauvegarde la Q-table dans un fichier JSON"""
+        try:
+            with open(filename, 'w') as f:
+                json.dump(self.Q_table, f, indent=4)
+            print(f"Q-table saved to {filename}")
+        except Exception as e:
+            print(f"Error saving Q-table: {e}")
 
+    def load(self, filename):
+        """Charge la Q-table à partir d'un fichier JSON"""
+        try:
+            with open(filename, 'r') as f:
+                self.Q_table = json.load(f)
+            print(f"Q-table loaded from {filename}")
+        except Exception as e:
+            print(f"Error loading Q-table: {e}")
+
+
+
+
+
+city_graph_weighted = {
+    "Paris": {"Lyon": 465, "Bruxelles": 310},
+    "Lyon": {"Marseille": 315},
+    "Bruxelles": {"Amsterdam": 210, "Berlin": 765},
+    "Marseille": {},
+    "Amsterdam": {"Paris": 500}
+}
+
+
+
+city_graph = {
+    "Paris": ["Lyon", "Bruxelles"],
+    "Lyon": ["Marseille"],
+    "Bruxelles": ["Amsterdam", "Berlin"],
+    "Marseille": [],
+    "Amsterdam": ["Paris"]
+}
 
 
 

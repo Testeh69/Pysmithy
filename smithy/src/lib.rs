@@ -24,7 +24,7 @@ fn sigmoid(x: f32) -> PyResult<f32> {
 
 #[pyfunction]
 fn dot_matrice(a:Vec<Vec<f32>>, b:Vec<Vec<f32>>) -> PyResult<Vec<Vec<f32>>> {
-    Ok(ops::linear::dot_matrice(a,b))
+    Ok(ops::linear_alg::dot_matrice(a,b))
 }
    
 #[pyfunction]

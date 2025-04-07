@@ -1,2 +1,2 @@
-pub mod linear;
+pub mod linear_alg;
 pub mod activation;
