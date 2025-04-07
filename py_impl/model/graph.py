@@ -166,24 +166,4 @@ class QLearningGraphTravel:
 
 
 
-city_graph_weighted = {
-    "Paris": {"Lyon": 465, "Bruxelles": 310},
-    "Lyon": {"Marseille": 315},
-    "Bruxelles": {"Amsterdam": 210, "Berlin": 765},
-    "Marseille": {},
-    "Amsterdam": {"Paris": 500}
-}
-
-
-
-city_graph = {
-    "Paris": ["Lyon", "Bruxelles"],
-    "Lyon": ["Marseille"],
-    "Bruxelles": ["Amsterdam", "Berlin"],
-    "Marseille": [],
-    "Amsterdam": ["Paris"]
-}
-
-
-
 
