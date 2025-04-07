@@ -1,0 +1,20 @@
+{
+    "Paris": {
+        "Lyon": 182.55937851740504,
+        "Bruxelles": -194.63687276516856
+    },
+    "Lyon": {
+        "Marseille": 1643.364765
+    },
+    "Bruxelles": {
+        "Amsterdam": -123.61503284952533,
+        "Berlin": -5.456179775280901
+    },
+    "Marseille": {},
+    "Amsterdam": {
+        "Paris": -193.58036643818036
+    },
+    "Berlin": {
+        "Marseille": 2168.0
+    }
+}

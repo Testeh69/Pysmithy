@@ -24,10 +24,43 @@ city_graph = {
 }
 
 
+
+def custom_reward_function(state, next_action, end, graph):
+    """
+    Fonction de récompense pour le problème du voyageur de commerce.
+    - Récompense positive pour l'atteinte de l'objectif (Marseille).
+    - Pénalité basée sur la distance et les étapes.
+    """
+    if next_action == end:
+        return 10  # Grande récompense si l'agent atteint Marseille.
+    
+    # Pénalité pour chaque étape
+    step_penalty = -1
+    
+    # Récompense en fonction de la distance : inversement proportionnelle à la distance
+    if next_action in graph[state]:
+        distance_to_end = graph.get(next_action, {}).get(end, float('inf'))  # Distance de la ville suivante à l'objectif
+        reward = step_penalty + 1 / (distance_to_end + 1)  # Plus la distance est petite, plus la récompense est élevée
+    else:
+        reward = step_penalty  # Pénalité si l'action n'est valide
+    
+    return reward
+
+
+# Créer l'agent Q-learning pour le graphe pondéré
+ql_agent_weighted = QLearningGraphTravel(city_graph_weighted, epsilon=0.8, value_init=0, compute_rewards=custom_reward_function)
+
+# Entraîner l'agent avec le graphe pondéré
+print("Entraînement avec graphe pondéré...")
+ql_agent_weighted.train("Paris", "Marseille", epochs=10, limit=1000, lr=0.1, gamma=0.9, reward=-6, verbose=True)
+
+# Sauvegarder la Q-table dans un fichier JSON pour le graphe pondéré
+ql_agent_weighted.save("q_table_weighted_custom_reward.json")
+
+
 # Créer l'agent Q-learning pour le graphe pondéré
 ql_agent_weighted = QLearningGraphTravel(city_graph_weighted, epsilon=0.8, value_init=0)
 
-print(ql_agent_weighted.Q_table)
 # Entraîner l'agent avec le graphe pondéré
 print("Entraînement avec graphe pondéré...")
 ql_agent_weighted.train("Paris", "Marseille", epochs=10, limit=1000, lr=0.1, gamma=0.9, reward=-6, verbose=True)

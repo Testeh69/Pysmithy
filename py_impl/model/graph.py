@@ -36,23 +36,26 @@ class QLearningGraphTravel:
     """
     
 
-    def __init__(self, graphcities, epsilon = 0.8, value_init = 0):
+    def __init__(self, env, epsilon = 0.8, value_init = 0, compute_rewards = None):
         
         """
         Initializes the Q-learning agent.
 
         Args:
-            graphcities (dict): A dictionary representing the graph structure.
+            env (dict): A dictionary representing the graph structure.
             epsilon (float, optional): Initial probability of taking a random action (default: 0.8).
             value_init (float, optional): Initial Q-values for all state-action pairs (default: 0).
         """
-        self.graph_cities = graphcities
-        self.Q_table = {city: {action: value_init for action in graphcities[city]} for city in graphcities}
+        self.env = env
+        self.Q_table = {state: {action: value_init for action in env[state]} for state in env}
         self.travel = []
         self.history_epsilon = epsilon
         self.epsilon = epsilon
         self.state = None
         self.next_best_action = None
+        self.step_reward = 0
+        self.total_reward = 0
+        self.compute_rewards = compute_rewards
     
 
     def train(self,beginning,end, epochs = 10, limit = 1000, lr = 0.001,gamma = 0.9, reward = -6, verbose = True):
@@ -68,6 +71,7 @@ class QLearningGraphTravel:
             gamma (float, optional): Discount factor for future rewards (default: 0.9).
             reward (int, optional): Default reward for non-goal states (default: -6).
             verbose (bool, optional): If True, prints training progress (default: True).
+            compute_rewards: doit passer une fonction compute_rewards qui a trois quatre_arquement ( state, next_state,target, env)
         """
           
         for x in range(epochs):
@@ -79,27 +83,29 @@ class QLearningGraphTravel:
             while self.state != end and nb_travel_cities < limit:
                 self.travel.append(self.state)
                 self.choice_action()
-                step_reward = 0.1 if self.state == end else reward
-                self.update_q_table(step_reward=step_reward, lr = lr, gamma = gamma)
+                if self.compute_rewards == None:
+                    self.step_reward = 0.1 if self.state == end else reward
+                else:
+                    self.step_reward = self.compute_rewards(self.state, self.next_best_action, end, self.env)
+                self.update_q_table(step_reward=self.step_reward, lr = lr, gamma = gamma)
                 self.state = self.next_best_action
-                total_reward += step_reward
+                self.total_reward += self.step_reward
                 nb_travel_cities +=1
-                if self.state not in self.graph_cities.keys():
+                if self.state not in self.env.keys():
                     continue
-
-        
             
             if verbose:
-                print(f"Epoch {x + 1}/{epochs} - Total Rewards: {total_reward}")
+                print(f"Epoch {x + 1}/{epochs} - Total Rewards: {self.total_reward}")
                 print(f"Path: {self.travel}")     
+
 
 
     def update_q_table(self, step_reward, lr, gamma):
         max_next_Q = max(self.Q_table[self.next_best_action].values()) if self.Q_table[self.next_best_action] else 0
-        if isinstance(self.graph_cities[self.state],list):
+        if isinstance(self.env[self.state],list):
             self.Q_table[self.state][self.next_best_action] += lr*(step_reward + gamma* max_next_Q - self.Q_table[self.state][self.next_best_action])           
-        if isinstance(self.graph_cities[self.state], dict):
-            get_weighted_sum = self.graph_cities[self.state].get(self.next_best_action, 1)
+        if isinstance(self.env[self.state], dict):
+            get_weighted_sum = self.env[self.state].get(self.next_best_action, 1)
             self.Q_table[self.state][self.next_best_action] += lr*(step_reward*get_weighted_sum + gamma* max_next_Q - self.Q_table[self.state][self.next_best_action])           
             
 
@@ -134,10 +140,10 @@ class QLearningGraphTravel:
         self.epsilon = max(0.1, self.epsilon * np.exp(-decay))         
         x = np.random.uniform(0,1)
         if x < self.epsilon:
-            if isinstance(self.graph_cities[self.state],list):
-                self.next_best_action = random.choice(self.graph_cities[self.state])
-            if isinstance(self.graph_cities[self.state], dict):
-                self.next_best_action = random.choice(list(self.graph_cities[self.state].keys()))
+            if isinstance(self.env[self.state],list):
+                self.next_best_action = random.choice(self.env[self.state])
+            if isinstance(self.env[self.state], dict):
+                self.next_best_action = random.choice(list(self.env[self.state].keys()))
 
         else:
             self.next_best_action = max(self.Q_table[self.state], key=self.Q_table[self.state].get)
